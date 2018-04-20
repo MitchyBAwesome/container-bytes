@@ -6,7 +6,11 @@ A selection of short hands-on labs to help you learn how to use Amazon Container
 
 === Cost management and EC2 scaling
 
-https://github.com/MitchyBAwesome/container-bytes/issues/1[Issue #1]
+|===
+|Region | Launch Template
+| *N. Virginia* (us-east-1)
+a| image::./images/deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-microservices-deploy-options-ecscli&templateURL=https://s3.amazonaws.com/aws-microservices-deploy-options/infra.yaml]
+|===
 
 === ECS Service deployment and task Auto Scaling
 
