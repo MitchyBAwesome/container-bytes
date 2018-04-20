@@ -1,15 +1,15 @@
 Container-Bytes
 ===============
 
-A selection of short hands-on labs to help you learn how to use Amazon Container Services.
-
 :toc:
 :toc-placement: preamble
 :toclevels: 1
 :Some attr: Some value
 
 // Need some preamble to get TOC:
-{empty}
+A selection of short hands-on labs to help you learn how to use Amazon Container Services.
+
+toc::[]
 
 === Cost management and EC2 scaling
 
