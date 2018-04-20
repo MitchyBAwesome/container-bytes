@@ -1,0 +1,58 @@
+Container-Bytes
+===============
+
+A selection of short hands-on labs to help you learn how to use Amazon Container Services.
+
+:toc:
+:toc-placement: preamble
+:toclevels: 1
+:Some attr: Some value
+
+// Need some preamble to get TOC:
+{empty}
+
+=== Cost management and EC2 scaling
+
+https://github.com/MitchyBAwesome/container-bytes/issues/1[Issue #1]
+
+=== ECS Service deployment and task Auto Scaling
+
+https://github.com/MitchyBAwesome/container-bytes/issues/2[Issue #2]
+
+=== Task bursting using AWS Fargate
+
+https://github.com/MitchyBAwesome/container-bytes/issues/3[Issue #3]
+
+=== The secret to secrets with Parameter Store
+
+https://github.com/MitchyBAwesome/container-bytes/issues/4[Issue #4]
+
+=== Finding your way, with Service Discovery
+
+https://github.com/MitchyBAwesome/container-bytes/issues/5[Issue #5]
+
+=== Distributed Tracing with Amazon X-Ray
+
+https://github.com/MitchyBAwesome/container-bytes/issues/6[Issue #6]
+
+=== Building a CICD Pipeline for AWS Fargate
+
+https://github.com/MitchyBAwesome/container-bytes/issues/7[Issue #7]
+
+=== Building a CICD Pipeline for AWS EKS
+
+https://github.com/MitchyBAwesome/container-bytes/issues/7[Issue #7]
+
+=== Building a CICD Pipeline for AWS ECS
+
+https://github.com/MitchyBAwesome/container-bytes/issues/7[Issue #7]
+
+=== Logging all the things with Amazon ECS 
+
+https://github.com/MitchyBAwesome/container-bytes/issues/8[Issue #8]
+
+=== Managing the Mesh with LinkerD and ECS
+
+https://github.com/MitchyBAwesome/container-bytes/issues/9[Issue #9]
+
+
