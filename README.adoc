@@ -1,10 +1,6 @@
-Container-Bytes
-===============
+= Container-Bytes
 
 :toc:
-:toc-placement: preamble
-:toclevels: 1
-:Some attr: Some value
 
 A selection of short hands-on labs to help you learn how to use Amazon Container Services.
 
