@@ -6,10 +6,7 @@ Container-Bytes
 :toclevels: 1
 :Some attr: Some value
 
-// Need some preamble to get TOC:
 A selection of short hands-on labs to help you learn how to use Amazon Container Services.
-
-toc::[]
 
 === Cost management and EC2 scaling
 
