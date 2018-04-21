@@ -4,9 +4,9 @@
 
 A selection of short hands-on labs to help you learn how to use Amazon Container Services.
 
-=== Cost management and EC2 scaling
+== Cost management and EC2 scaling
 
-==== Deploy the base stack
+=== Deploy the base stack
 
 . Run the CloudFormation template to create the AWS resources:
 
@@ -16,82 +16,85 @@ A selection of short hands-on labs to help you learn how to use Amazon Container
 a| image::./images/deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=container-bytes-lab1&templateURL=https://s3.amazonaws.com/aws-microservices-deploy-options/infra.yaml]
 |===
 
-1. In the ECS console, create a new ECS cluster. Use the cluster creation wizard to create a new cluster composed of Spot instances:
+. In the ECS console, create a new ECS cluster. Use the cluster creation wizard to create a new cluster composed of Spot instances:
 
-    a.  Give the cluster a name.
+.. The cluster should be named **container-bytes-lab1**. This name is referenced later in the lab, so if you name the cluster something else you will have to remember this when following later steps.
 
-   	b.	Select several instance types from a range of instance types. It is recommended you use smaller instance sizes rather than large ones. For example: m4.large, c4.large, r4.large, i3.large. You may also use previous-generation families.
+.. Select several instance types from a range of instance types. It is recommended you use smaller instance sizes rather than large ones. For example:
 
-   	c.	Set a maximum bid price of $0.25.
+*** m4.large
+*** c4.large
+*** r4.large
+*** i3.large.
++
+[NOTE]
+You may also use previous-generation families
 
-   	d.	Set the number of instances to 3.
+.. Set a maximum bid price of $0.25.
 
-   	e.	Launch instances into the VPC named ECSVPC, using the private subnets.
+.. Set the number of instances to 3.
 
-   	f.	Use the security group with InstanceSecurityGroup in the name.
+.. Launch instances into the VPC named ECSVPC, using the private subnets.
 
-   	g.	For the Container Instance role, use the IAM Role with catsndogssetup-EC2Role in the name.
+.. Use the security group with InstanceSecurityGroup in the name.
 
-   	h.	For the Spot Fleet request role, use the catsndogssetup-SpotFleetTaggingRole
+.. For the Container Instance role, use the IAM Role with container-bytes-lab1-EC2Role in the name.
 
-2.	Open the CloudFormation console and select the stack that has been created. Click the Template tab and look at the User Data for the EcsSpotFleet resource in the template. More information about this script can be found on the AWS Compute blog: https://aws.amazon.com/blogs/compute/powering-your-amazon-ecs-cluster-with-amazon-ec2-spot-instances/
+.. For the Spot Fleet request role, use the container-bytes-lab1-SpotFleetTaggingRole
 
-3.	Create a CloudWatch alarm called **ScaleOut** that will be used to scale out the Spot fleet:
+. Open the CloudFormation console and select the stack that has been created. Click the Template tab and look at the User Data for the EcsSpotFleet resource in the template. More information about this script can be found on the AWS Compute blog: https://aws.amazon.com/blogs/compute/powering-your-amazon-ecs-cluster-with-amazon-ec2-spot-instances/
 
-   	a.	Use the ECS metric MemoryReservation.
+. Create a CloudWatch alarm called **ScaleOut** that will be used to scale out the Spot fleet:
 
-   	b.	The alarm should enter the ALARM state when the value is over 20% for more than two minutes. This will require changing the monitoring period.
+.. Use the ECS metric MemoryReservation.
 
-   	c.	For the Statistic use the Standard metric Maximum.
+.. The alarm should enter the ALARM state when the value is over 20% for more than two minutes. This will require changing the monitoring period.
 
-   	d.	Delete the pre-created Notification action.
+.. For the Statistic use the Standard metric Maximum.
 
-4.	Repeat step 3 to create a new alarm called **ScaleIn**. Have the alarm enter an ALARM state when the metric is below 20%.
+.. Delete the pre-created Notification action.
 
-5.	Set up Auto Scaling for the Spot fleet. Spot fleet Auto Scaling is a property of the Spot request, so this is located in the EC2 Console Spot Requests.
+. Repeat step 3 to create a new alarm called **ScaleIn**. Have the alarm enter an ALARM state when the metric is below 20%.
 
-   	a. Set Auto Scaling to scale between 3 and 10 instances.
+. Set up Auto Scaling for the Spot fleet. Spot fleet Auto Scaling is a property of the Spot request, so this is located in the EC2 Console Spot Requests.
 
-   	b. Create two Auto Scaling policies, one called ScaleUp and one called ScaleDown. You may have to click the link that says *Scale Spot fleet using step or simple scaling policies*
+.. Set Auto Scaling to scale between 3 and 10 instances.
 
-   	c. In the ScaleUp policy, use Define Steps to add 2 instances when the MemoryReservation is between 20 and 50, and add 3 instances when the MemoryReservation is over 50.
+.. Create two Auto Scaling policies, one called ScaleUp and one called ScaleDown. You may have to click the link that says *Scale Spot fleet using step or simple scaling policies*
 
-   	d. In the ScaleDown policy, use Define Steps to remove 1 instance when the MemoryReservation is between 10 and 20, and remove 2 instances when the MemoryReservation is below 10.
+.. In the ScaleUp policy, use Define Steps to add 2 instances when the MemoryReservation is between 20 and 50, and add 3 instances when the MemoryReservation is over 50.
 
-6.	Create an Auto Scaling group of on-demand instances to provide long-term core capacity for the ECS cluster. If you have used Auto Scaling groups with ECS before, you can launch a CloudFormation stack to create this automatically. The CloudFormation template is called `cfn-templates/Lab1-add-ondemand-asg-to-cluster.yml` If you have not used Auto Scaling groups with ECS, you can follow the steps below to learn how to do this:
+.. In the ScaleDown policy, use Define Steps to remove 1 instance when the MemoryReservation is between 10 and 20, and remove 2 instances when the MemoryReservation is below 10.
 
-7.	You will need a copy of the AMI ID of an instance that was launched when you created the ECS cluster earlier. You can find this from the properties of any of the Spot fleet instances.
+. Create an Auto Scaling group of on-demand instances to provide long-term core capacity for the ECS cluster. If you have used Auto Scaling groups with ECS before, you can launch a CloudFormation stack to create this automatically. The CloudFormation template is called `cfn-templates/Lab1-add-ondemand-asg-to-cluster.yml` If you have not used Auto Scaling groups with ECS, you can follow the steps below to learn how to do this:
 
-8.	Create a new Launch Configuration:
+. You will need a copy of the AMI ID of an instance that was launched when you created the ECS cluster earlier. You can find this from the properties of any of the Spot fleet instances.
 
-   	a.	Use the AMI ID you copied in step 7.
+. Create a new Launch Configuration:
 
-   	b.	Use an m4.large instance type.
+.. Use the AMI ID you copied in step 7.
 
-   	c.	Use the IAM Role with EC2InstanceProfile in the name.
+.. Use an m4.large instance type.
 
-   	d.	Paste in the following User Data:
-    
-        #!/bin/bash
-		    echo ECS_CLUSTER=catsndogsECScluster >> /etc/ecs/ecs.config
-	  
-    e. Use the security group with InstanceSecurityGroup in the name.
+.. Use the IAM Role with EC2InstanceProfile in the name.
 
-9.	Create an Auto Scaling group using the Launch Configuration you just created:
+.. Paste in the following User Data:
 
-   	a.	Start with 1 instance.
+    #!/bin/bash
+    echo ECS_CLUSTER=catsndogsECScluster >> /etc/ecs/ecs.config
 
-   	b.	Launch instances into the VPC named ECSVPC, using the private subnets.
 
-   	c.	Do not configure any scaling policies or notifications.
+.. Use the security group with InstanceSecurityGroup in the name.
+
+. Create an Auto Scaling group using the Launch Configuration you just created:
+
+.. Start with 1 instance.
+
+.. Launch instances into the VPC named ECSVPC, using the private subnets.
+
+.. Do not configure any scaling policies or notifications.
 
 You should now have an ECS cluster composed of three instances from the Spot fleet request, and one instance from the on-demand Auto Scaling group.
-
-# What's Next
-[ECS Service deployment and task Auto Scaling](../Lab-2-Artifacts/)
-
-# Detailed Instructions
-[Cost management and EC2 scaling - Detailed Instructions](./lab1-detailed-steps.md)
 
 === ECS Service deployment and task Auto Scaling
 
@@ -125,12 +128,10 @@ https://github.com/MitchyBAwesome/container-bytes/issues/7[Issue #7]
 
 https://github.com/MitchyBAwesome/container-bytes/issues/7[Issue #7]
 
-=== Logging all the things with Amazon ECS 
+=== Logging all the things with Amazon ECS
 
 https://github.com/MitchyBAwesome/container-bytes/issues/8[Issue #8]
 
 === Managing the Mesh with LinkerD and ECS
 
 https://github.com/MitchyBAwesome/container-bytes/issues/9[Issue #9]
-
-
