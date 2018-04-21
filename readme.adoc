@@ -13,12 +13,12 @@ A selection of short hands-on labs to help you learn how to use Amazon Container
 |===
 |Region | Launch Template
 | *N. Virginia* (us-east-1)
-a| image::./images/deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-microservices-deploy-options-ecscli&templateURL=https://s3.amazonaws.com/aws-microservices-deploy-options/infra.yaml]
+a| image::./images/deploy-to-aws.png[link=https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=container-bytes-lab1&templateURL=https://s3.amazonaws.com/aws-microservices-deploy-options/infra.yaml]
 |===
 
 1. In the ECS console, create a new ECS cluster. Use the cluster creation wizard to create a new cluster composed of Spot instances:
 
-    a. The cluster should be named **catsndogsECScluster**. This name is used in later labs, so if you name the cluster something else you will have to remember this when running later commands.
+    a.  Give the cluster a name.
 
    	b.	Select several instance types from a range of instance types. It is recommended you use smaller instance sizes rather than large ones. For example: m4.large, c4.large, r4.large, i3.large. You may also use previous-generation families.
 
